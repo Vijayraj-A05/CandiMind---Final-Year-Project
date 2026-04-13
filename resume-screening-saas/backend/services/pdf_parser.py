@@ -16,3 +16,5 @@ def extract_text_from_pdf(pdf_bytes: bytes) -> str:
     except Exception as e:
         print(f"Error parsing PDF: {e}")
         return ""
+
+
