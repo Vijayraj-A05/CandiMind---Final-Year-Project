@@ -15,3 +15,6 @@ class CandidateResult(BaseModel):
     skills: List[str]
     experience: str
     education: str
+
+
+# last updated by backend
