@@ -13,7 +13,7 @@ class CandidateResult(BaseModel):
     match_classification: str
     summary: str
     skills: List[str]
+    matched_skills: List[str] = []
+    missing_skills: List[str] = []
     experience: str
     education: str
-    
-    # test change by rishi

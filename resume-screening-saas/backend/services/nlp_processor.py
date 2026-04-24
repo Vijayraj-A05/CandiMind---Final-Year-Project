@@ -8,13 +8,25 @@ except Exception as e:
     print(f"Failed to load spaCy model: {e}")
     nlp = None
 
-# A basic predefined list of tech skills to look for.
-COMMON_SKILLS = [
-    "python", "java", "react", "javascript", "typescript", "c++", "c#", 
-    "sql", "nosql", "aws", "gcp", "azure", "docker", "kubernetes", 
-    "machine learning", "deep learning", "nlp", "fastapi", "django", 
-    "flask", "html", "css", "node.js", "next.js", "tailwind", "git"
+# Predefined skill lists - SOFTWARE
+SOFTWARE_SKILLS = [
+    "html", "css", "javascript", "react", "node.js", "express",
+    "python", "java", "sql", "mongodb", "django", "flask",
+    "git", "docker", "aws", "kubernetes", "tensorflow", "pytorch",
+    "typescript", "c++", "c#", "nosql", "gcp", "azure",
+    "machine learning", "deep learning", "nlp", "fastapi", "next.js", 
+    "tailwind", "rest api", "graphql", "postgresql", "mysql"
 ]
+
+# Predefined skill lists - HARDWARE
+HARDWARE_SKILLS = [
+    "c", "embedded systems", "arduino", "raspberry pi",
+    "vlsi", "verilog", "pcb design", "iot", "robotics",
+    "networking", "linux", "firmware"
+]
+
+# Combined for backward compatibility
+COMMON_SKILLS = SOFTWARE_SKILLS + HARDWARE_SKILLS
 
 def extract_entities(text: str) -> Dict[str, any]:
     """
@@ -63,7 +75,34 @@ def extract_skills_from_jd(jd_text: str) -> List[str]:
     for skill in COMMON_SKILLS:
         if skill in jd_lower:
             skills.append(skill)
-    return skills
+    return list(set(skills))
+
+def extract_skills_from_resume(resume_text: str) -> List[str]:
+    """
+    Extracts skills from resume text by matching against predefined skill lists.
+    Returns a list of matched skills with no duplicates.
+    """
+    text_lower = resume_text.lower()
+    matched_skills = []
+    
+    for skill in COMMON_SKILLS:
+        if skill in text_lower and skill not in matched_skills:
+            matched_skills.append(skill)
+    
+    return matched_skills
+
+def compare_skills(candidate_skills: List[str], job_required_skills: List[str]) -> Dict[str, List[str]]:
+    """
+    Compares candidate skills with job-required skills.
+    Returns matched and missing skills.
+    """
+    matched = [skill for skill in candidate_skills if skill in job_required_skills]
+    missing = [skill for skill in job_required_skills if skill not in candidate_skills]
+    
+    return {
+        "matched_skills": list(set(matched)),
+        "missing_skills": list(set(missing))
+    }
 
 def generate_summary(skills: List[str], experience: str) -> str:
     """

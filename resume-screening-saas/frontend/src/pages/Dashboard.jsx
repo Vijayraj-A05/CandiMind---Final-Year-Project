@@ -351,12 +351,67 @@ export default function Dashboard() {
                           <span className="truncate">{cand.experience}</span>
                         </div>
 
-                        <div className="flex flex-wrap gap-2">
-                          {cand.skills.map((skill, si) => (
-                            <span key={si} className="px-2 py-1 text-xs rounded-md bg-slate-900 text-slate-300 border border-slate-700 shadow-sm">
-                              {skill}
-                            </span>
-                          ))}
+                        {/* SKILLS SECTION */}
+                        <div className="space-y-4 mt-6">
+                          {/* All Skills */}
+                          {cand.skills && cand.skills.length > 0 && (
+                            <div className="bg-slate-900/40 p-4 rounded-lg border border-slate-700/50">
+                              <p className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-3">
+                                Skills <span className="text-slate-500">({cand.skills.length})</span>
+                              </p>
+                              <div className="flex flex-wrap gap-2">
+                                {cand.skills.map((skill, si) => (
+                                  <span 
+                                    key={si} 
+                                    title={`Skill: ${skill}`}
+                                    className="px-3 py-1.5 text-xs rounded-full bg-slate-800 text-slate-300 border border-slate-700 hover:border-slate-500 hover:bg-slate-700/80 transition-all cursor-default"
+                                  >
+                                    {skill}
+                                  </span>
+                                ))}
+                              </div>
+                            </div>
+                          )}
+
+                          {/* Matched Skills */}
+                          {cand.matched_skills && cand.matched_skills.length > 0 && (
+                            <div className="bg-green-900/20 p-4 rounded-lg border border-green-700/30">
+                              <p className="text-xs font-bold uppercase tracking-wider text-green-400 mb-3">
+                                ✅ Matched Skills <span className="text-green-600">({cand.matched_skills.length})</span>
+                              </p>
+                              <div className="flex flex-wrap gap-2">
+                                {cand.matched_skills.map((skill, si) => (
+                                  <span 
+                                    key={si}
+                                    title="Skill matched with job role"
+                                    className="px-3 py-1.5 text-xs rounded-full bg-green-900/40 text-green-300 border border-green-600/50 hover:bg-green-900/60 hover:border-green-500 transition-all cursor-default"
+                                  >
+                                    {skill}
+                                  </span>
+                                ))}
+                              </div>
+                            </div>
+                          )}
+
+                          {/* Missing Skills */}
+                          {cand.missing_skills && cand.missing_skills.length > 0 && (
+                            <div className="bg-red-900/20 p-4 rounded-lg border border-red-700/30">
+                              <p className="text-xs font-bold uppercase tracking-wider text-red-400 mb-3">
+                                ❌ Missing Skills <span className="text-red-600">({cand.missing_skills.length})</span>
+                              </p>
+                              <div className="flex flex-wrap gap-2">
+                                {cand.missing_skills.map((skill, si) => (
+                                  <span 
+                                    key={si}
+                                    title="Required skill not found in resume"
+                                    className="px-3 py-1.5 text-xs rounded-full bg-red-900/40 text-red-300 border border-red-600/50 hover:bg-red-900/60 hover:border-red-500 transition-all cursor-default"
+                                  >
+                                    {skill}
+                                  </span>
+                                ))}
+                              </div>
+                            </div>
+                          )}
                         </div>
                       </div>
 
