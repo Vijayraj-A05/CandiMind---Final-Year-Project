@@ -36,3 +36,5 @@ def health_check():
         "status": "OK",
         "message": "Backend is working fine 💯"
     }
+
+# updating the main.py and check the backend connection
